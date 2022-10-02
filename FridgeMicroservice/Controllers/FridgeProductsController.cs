@@ -82,7 +82,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpPost("{fridgeId}")]
         [Authorize(Roles = "User, Administrator")]
-        public async Task<ActionResult> CreateAsync(Guid id, FridgeProductModelCreate fridgeProduct)
+        public async Task<ActionResult> CreateAsync(Guid fridgeId, FridgeProductModelCreate fridgeProduct)
         {
             if (fridgeProduct == null || !ModelState.IsValid)
                 return NotFound();
@@ -90,13 +90,13 @@ namespace FridgeMicroservice.Controllers
             var productMap = _mapper.Map<FridgeProductDto>(fridgeProduct);
 
             if (productMap != null)
-                await _fridgeProductsService.CreateAsync(id, productMap);
+                await _fridgeProductsService.CreateAsync(fridgeId, productMap);
             else
                 return BadRequest("Invalid data");
 
             string[] response = new[]
             {
-                id.ToString(),
+                fridgeId.ToString(),
                 productMap.Id.ToString(),
                 productMap.ProductId.ToString()
             };

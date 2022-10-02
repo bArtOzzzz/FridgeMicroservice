@@ -23,7 +23,7 @@ namespace FridgeMicroservice.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "User, Administrator")]
         public async Task<ActionResult> GetAllAsync()
         {
             if (!ModelState.IsValid)
@@ -35,7 +35,7 @@ namespace FridgeMicroservice.Controllers
         }
 
         [HttpGet("{modelId}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "User, Administrator")]
         public async Task<ActionResult> GetByIdAsync(Guid modelId)
         {
             bool isExist = await _modelsService.IsExist(modelId);
