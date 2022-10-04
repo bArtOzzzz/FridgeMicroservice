@@ -49,8 +49,7 @@ namespace FridgeMicroservice.Controllers
         }
 
         [HttpGet("fridgeProduct/{fridgeId}")]
-        // TODO: Auth comment!
-        //[Authorize(Roles = "User, Administrator")]
+        [Authorize(Roles = "User, Administrator")]
         public async Task<ActionResult> GetFridgeProductsByFridgeIdAsync(Guid fridgeId)
         {
             bool isExist = await _fridgeProductsService.IsExistFridgeAsync(fridgeId);
