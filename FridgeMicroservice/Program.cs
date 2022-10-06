@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using System.Text;
 using MassTransit;
@@ -18,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<RabbitMqListener>();
-    x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+    x.AddBus(provider => Bus.Factory
+     .CreateUsingRabbitMq(config =>
     {
         config.Host(new Uri("rabbitmq://localhost"), h =>
         {
@@ -34,10 +34,11 @@ builder.Services.AddMassTransit(x =>
 });
 
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
+builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                });
 
 // Enable AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
@@ -60,24 +61,27 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(option =>
-    {
-        option.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+                .AddJwtBearer(option =>
+                {
+                    option.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 
 // Add connection to the database
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("FridgeMicroservice"));
+    options.UseSqlServer(builder.Configuration
+           .GetConnectionString("DefaultConnection"), b => b
+           .MigrationsAssembly("FridgeMicroservice"));
 });
 
 // Enable CORS
@@ -102,7 +106,8 @@ app.UseCors("AllowSpecificOrigins");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FridgeJWTToken v1"));
+    app.UseSwaggerUI(c => c
+       .SwaggerEndpoint("/swagger/v1/swagger.json", "FridgeJWTToken v1"));
 }
 
 app.UseHttpsRedirection();
