@@ -10,6 +10,7 @@ using Repositories;
 using Services.Abstract;
 using Services;
 using Repositories.Context;
+using System.Net.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
