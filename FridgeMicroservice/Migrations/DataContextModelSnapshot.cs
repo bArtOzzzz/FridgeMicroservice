@@ -54,28 +54,28 @@ namespace FridgeMicroservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a2268d68-d201-4d29-867d-e35e79cf6a1c"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3866),
+                            Id = new Guid("23f740ee-0b12-4801-b7e4-e4d6d9944e58"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1622),
                             Manufacturer = "LG",
-                            ModelId = new Guid("80771113-d807-4dde-aa15-6c9320038da2"),
+                            ModelId = new Guid("f539773d-17a6-42fe-be14-f6c44b00b447"),
                             OwnerName = "Alex",
                             UserId = new Guid("00000000-0000-0000-0000-000000000000")
                         },
                         new
                         {
-                            Id = new Guid("6b4aa808-48fc-4a63-aa81-aab2df7efea8"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3869),
+                            Id = new Guid("371c4696-dbb8-4238-ac71-4be945f56993"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1624),
                             Manufacturer = "Samsung",
-                            ModelId = new Guid("633d9ada-fbf8-410a-98a3-d2d15a09a5fa"),
+                            ModelId = new Guid("4aaec8d1-ae2e-44a3-a5e0-4bbeebebfe76"),
                             OwnerName = "Martin",
                             UserId = new Guid("00000000-0000-0000-0000-000000000000")
                         },
                         new
                         {
-                            Id = new Guid("84b45896-d651-42d6-b96e-aa38772e2ef6"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3870),
+                            Id = new Guid("a70797f7-6d0f-45db-847d-55ebe82dc049"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1625),
                             Manufacturer = "Atlant",
-                            ModelId = new Guid("633d9ada-fbf8-410a-98a3-d2d15a09a5fa"),
+                            ModelId = new Guid("4aaec8d1-ae2e-44a3-a5e0-4bbeebebfe76"),
                             OwnerName = "Espio",
                             UserId = new Guid("00000000-0000-0000-0000-000000000000")
                         });
@@ -130,15 +130,15 @@ namespace FridgeMicroservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("80771113-d807-4dde-aa15-6c9320038da2"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3932),
+                            Id = new Guid("f539773d-17a6-42fe-be14-f6c44b00b447"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1682),
                             Name = "RT-700",
                             ProductionYear = 2019
                         },
                         new
                         {
-                            Id = new Guid("633d9ada-fbf8-410a-98a3-d2d15a09a5fa"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3934),
+                            Id = new Guid("4aaec8d1-ae2e-44a3-a5e0-4bbeebebfe76"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1683),
                             Name = "HG50",
                             ProductionYear = 2010
                         });
@@ -170,36 +170,36 @@ namespace FridgeMicroservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("88fdc2fa-09ba-47d4-a9fb-d33099c97929"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3958),
+                            Id = new Guid("311c92af-ef71-43e7-a060-669c648a7e04"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1701),
                             LinkImage = "https://craves.everybodyshops.com/wp-content/uploads/ThinkstockPhotos-535489242-1024x683@2x.jpg",
                             Name = "Milk"
                         },
                         new
                         {
-                            Id = new Guid("bfe35d1f-5d6a-4d22-b722-635a9f361738"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3959),
+                            Id = new Guid("55999c85-cc72-4eff-88a2-3756885cd0e5"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1702),
                             LinkImage = "https://www.expatica.com/app/uploads/sites/2/2014/05/bread.jpg",
                             Name = "Bread"
                         },
                         new
                         {
-                            Id = new Guid("2ac12399-0105-4b96-887a-86d851e23fd2"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3962),
+                            Id = new Guid("b12e1773-2148-4727-b9aa-0e54a27d358d"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1703),
                             LinkImage = "https://images5.alphacoders.com/102/1022723.jpg",
                             Name = "Juice"
                         },
                         new
                         {
-                            Id = new Guid("41d3107d-b978-4475-98fc-216dbc89fc1a"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3963),
+                            Id = new Guid("9cc94f48-214b-4305-b954-422fbfca7fb4"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1704),
                             LinkImage = "https://pm1.narvii.com/6810/05dbd7aaebf3454313b99edfd566b06356a59be3v2_hq.jpg",
                             Name = "Cheese"
                         },
                         new
                         {
-                            Id = new Guid("0b4cebcc-18af-4bd5-b4b2-5a410154866c"),
-                            CreatedDate = new DateTime(2022, 10, 3, 15, 1, 48, 634, DateTimeKind.Utc).AddTicks(3964),
+                            Id = new Guid("ef002825-d377-4c0b-9bbe-e4d15ca5f7e1"),
+                            CreatedDate = new DateTime(2022, 10, 14, 7, 14, 18, 263, DateTimeKind.Utc).AddTicks(1705),
                             LinkImage = "https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/218648/eggs-brown-getty_BSCxkDW.jpg&w=2000&op=resize",
                             Name = "Egg"
                         });

@@ -10,12 +10,22 @@ using Repositories;
 using Services.Abstract;
 using Services;
 using Repositories.Context;
-using System.Net.Security;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using AuthenticationMicroservice.HealthChecks.DatabaseCheck;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Fluent Validation
+#pragma warning disable CS0618 // Type or member is obsolete
+builder.Services.AddFluentValidation(x =>
+{
+    x.ImplicitlyValidateChildProperties = true;
+    x.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+    x.AutomaticValidationEnabled = false;
+});
+#pragma warning restore CS0618 // Type or member is obsolete
 
 // Add Masstransit && RabbitMQ
 builder.Services.AddMassTransit(x =>
