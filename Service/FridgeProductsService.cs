@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using Repositories.Abstract;
+﻿using Repositories.Abstract;
 using Repositories.Entities;
 using Services.Abstract;
 using Services.Dto;
+using AutoMapper;
 
 namespace Services
 {
@@ -26,9 +26,9 @@ namespace Services
             return _mapper.Map<List<FridgeProductDto>>(fridgeProducts);
         }
 
-        public async Task<FridgeProductDto?> GetByIdAsync(Guid id)
+        public async Task<FridgeProductDto?> GetByIdAsync(Guid fridgeProductId)
         {
-            var fridgeProduct = await _fridgeProductsRepository.GetByIdAsync(id);
+            var fridgeProduct = await _fridgeProductsRepository.GetByIdAsync(fridgeProductId);
 
             return _mapper.Map<FridgeProductDto>(fridgeProduct);
         }
@@ -70,14 +70,14 @@ namespace Services
         }
 
         // EXISTS
-        public async Task<bool> IsExistAsync(Guid id)
+        public async Task<bool> IsExistAsync(Guid fridgeProductId)
         {
-            return await _fridgeProductsRepository.IsExistAsync(id);
+            return await _fridgeProductsRepository.IsExistAsync(fridgeProductId);
         }
 
-        public async Task<bool> IsExistFridgeAsync(Guid id)
+        public async Task<bool> IsExistFridgeAsync(Guid fridgeId)
         {
-            return await _fridgeProductsRepository.IsExistFridgeAsync(id);
+            return await _fridgeProductsRepository.IsExistFridgeAsync(fridgeId);
         }
     }
 }

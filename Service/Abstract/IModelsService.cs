@@ -6,7 +6,7 @@ namespace Services.Abstract
     {
         // GET
         Task<List<ModelDto>> GetAllAsync();
-        Task<ModelDto?> GetByIdAsync(Guid id);
+        Task<ModelDto?> GetByIdAsync(Guid modelId);
 
         // POST
         Task<Guid> CreateAsync(ModelDto model);
@@ -18,6 +18,6 @@ namespace Services.Abstract
         Task<bool> DeleteAsync(ModelDto model);
 
         // EXISTS
-        Task<bool> IsExist(Guid id);
+        Task<bool> IsExist(Guid modelId);
     }
 }

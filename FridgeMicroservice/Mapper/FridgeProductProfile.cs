@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+﻿using FridgeMicroservice.Models.Response;
 using FridgeMicroservice.Models.Request;
-using FridgeMicroservice.Models.Response;
 using Repositories.Entities;
 using Services.Dto;
+using AutoMapper;
 
 namespace FridgeMicroservice.Mapper
 {

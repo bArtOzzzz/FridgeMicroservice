@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
-using Repositories.Context;
 using Repositories.Entities;
+using Repositories.Context;
 
 namespace Repositories
 {
@@ -19,9 +19,9 @@ namespace Repositories
                                          .ToListAsync();
         }
 
-        public async Task<FridgeEntity?> GetByIdAsync(Guid id)
+        public async Task<FridgeEntity?> GetByIdAsync(Guid fridgeId)
         {
-            return await _context.Fridges.Where(f => f.Id.Equals(id))
+            return await _context.Fridges.Where(f => f.Id.Equals(fridgeId))
                                          .AsNoTracking()
                                          .FirstOrDefaultAsync();
         }
@@ -58,7 +58,7 @@ namespace Repositories
             var currentFridge = await _context.Fridges.Where(f => f.Id.Equals(fridgeId))
                                                       .FirstOrDefaultAsync();
 
-            currentFridge.Manufacturer = fridge.Manufacturer;
+            currentFridge!.Manufacturer = fridge.Manufacturer;
             currentFridge.OwnerName = fridge.OwnerName;
 
             _context.Update(currentFridge);
@@ -77,9 +77,9 @@ namespace Repositories
         }
 
         // EXISTS
-        public async Task<bool> IsExistAsync(Guid id)
+        public async Task<bool> IsExistAsync(Guid fridgeId)
         {
-            return await _context.Fridges.FindAsync(id) != null;
+            return await _context.Fridges.FindAsync(fridgeId) != null;
         }
     }
 }

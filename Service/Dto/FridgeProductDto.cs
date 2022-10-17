@@ -7,7 +7,7 @@
         public Guid ProductId { get; set; }
         public DateTime CreatedDate { get; set; }
         public int ProductCount { get; set; }
-        public FridgeDto Fridge { get; set; }
-        public ProductDto Product { get; set; }
+        public FridgeDto? Fridge { get; set; }
+        public ProductDto? Product { get; set; }
     }
 }

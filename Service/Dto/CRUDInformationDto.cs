@@ -2,6 +2,6 @@
 {
     public class CRUDInformationDto
     {
-        string OperationInfo { get; set; }
+        string? OperationInfo { get; set; }
     }
 }

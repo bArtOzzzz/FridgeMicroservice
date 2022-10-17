@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Repositories.Entities;
 using Repositories.Abstract;
 using Repositories.Context;
-using Repositories.Entities;
 
 namespace Repositories
 {
@@ -10,10 +10,7 @@ namespace Repositories
         private readonly DataContext _context;
 
         // DB
-        public ProductsRepository(DataContext context)
-        {
-            _context = context;
-        }
+        public ProductsRepository(DataContext context) => _context = context;
 
         // GET
         public async Task<ProductEntity?> GetByNameAsync(string name)
@@ -47,7 +44,7 @@ namespace Repositories
                                                         .Equals(product.Id))
                                                         .FirstOrDefaultAsync();
 
-            currentProduct.Name = name;
+            currentProduct!.Name = name;
             currentProduct.LinkImage = product.LinkImage;
 
             _context.Update(currentProduct);

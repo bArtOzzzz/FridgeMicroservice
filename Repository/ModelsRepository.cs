@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
-using Repositories.Context;
 using Repositories.Entities;
+using Repositories.Context;
 
 namespace Repositories
 {
@@ -19,9 +19,9 @@ namespace Repositories
                                         .ToListAsync();
         }
 
-        public async Task<ModelEntity?> GetByIdAsync(Guid id)
+        public async Task<ModelEntity?> GetByIdAsync(Guid modelId)
         {
-            return await _context.Models.Where(m => m.Id.Equals(id))
+            return await _context.Models.Where(m => m.Id.Equals(modelId))
                                         .AsNoTracking()
                                         .FirstOrDefaultAsync();
         }
@@ -50,7 +50,7 @@ namespace Repositories
             var currentModel = await _context.Models.Where(m => m.Id.Equals(modelId))
                                                     .FirstOrDefaultAsync();
 
-            currentModel.Name = model.Name;
+            currentModel!.Name = model.Name;
             currentModel.ProductionYear = model.ProductionYear;
 
             _context.Update(currentModel);
@@ -69,9 +69,9 @@ namespace Repositories
         }
 
         // EXISTS
-        public async Task<bool> IsExist(Guid id)
+        public async Task<bool> IsExist(Guid modelId)
         {
-            return await _context.Models.FindAsync(id) != null;
+            return await _context.Models.FindAsync(modelId) != null;
         }
     }
 }

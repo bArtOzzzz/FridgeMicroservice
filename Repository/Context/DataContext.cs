@@ -19,27 +19,22 @@ namespace Repositories.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Local variables
-            #region VARIABLES
             Guid[] GuidModelArr = { Guid.NewGuid(),
                                     Guid.NewGuid() };
 
             Guid[] GuidFridgeArr = { Guid.NewGuid(),
                                      Guid.NewGuid(),
                                      Guid.NewGuid() };
-            #endregion
 
 
             // Set main settings for entities
-            #region Model database settings
             modelBuilder.Entity<ModelEntity>(
                 entity =>
                 {
                     entity.Property(e => e.Id)
                           .IsRequired();
                 });
-            #endregion
 
-            #region Fridge database settings
             modelBuilder.Entity<FridgeEntity>(
                entity =>
                {
@@ -68,9 +63,7 @@ namespace Repositories.Context
                            j.ToTable("FridgeProduct");
                        });
                });
-            #endregion
 
-            #region Product database settings
             modelBuilder.Entity<ProductEntity>(
             entity =>
             {
@@ -79,21 +72,16 @@ namespace Repositories.Context
 
                 entity.HasIndex(n => n.Name)
                         .IsUnique();
-            });
-            #endregion 
+            }); 
 
-            #region FridgeProduct database settings
             modelBuilder.Entity<FridgeProductEntity>(
                 entity =>
                 {
                     entity.Property(e => e.Id)
                           .IsRequired();
                 });
-            #endregion
-
 
             // SEEDDATA
-            #region FRIDGE SEEDDATA
             modelBuilder.Entity<FridgeEntity>().HasData(
                 new FridgeEntity
                 {
@@ -121,9 +109,7 @@ namespace Repositories.Context
                     Manufacturer = "Atlant",
                     OwnerName = "Espio"
                 });
-            #endregion
 
-            #region MODEL SEEDDATA
             modelBuilder.Entity<ModelEntity>().HasData(
                 new ModelEntity
                 {
@@ -140,9 +126,7 @@ namespace Repositories.Context
                     Name = "HG50",
                     ProductionYear = 2010
                 });
-            #endregion
 
-            #region PRODUCT SEEDDATA
             modelBuilder.Entity<ProductEntity>().HasData(
 
                 new ProductEntity
@@ -184,7 +168,6 @@ namespace Repositories.Context
                     Name = "Egg",
                     LinkImage = "https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/218648/eggs-brown-getty_BSCxkDW.jpg&w=2000&op=resize"
                 });
-            #endregion
         }
     }
 }

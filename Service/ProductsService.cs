@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using Repositories.Abstract;
+﻿using Repositories.Abstract;
 using Repositories.Entities;
 using Services.Abstract;
 using Services.Dto;
+using AutoMapper;
 
 namespace Services
 {
@@ -31,7 +31,7 @@ namespace Services
         // PUT
         public async Task<Guid> UpdateAsync(ProductDto product, string name)
         {
-            var productMessageData = _mapper.Map<ProductEntity>(await _productsRepository.GetByNameAsync(product.PreviousName));
+            var productMessageData = _mapper.Map<ProductEntity>(await _productsRepository.GetByNameAsync(product.PreviousName!));
 
             return await _productsRepository.UpdateAsync(productMessageData, name);
         }
@@ -39,9 +39,9 @@ namespace Services
         // DELETE
         public async Task<bool> DeleteAsync(ProductDto product)
         {
-            var productExist = await _productsRepository.GetByNameAsync(product.Name);
+            ProductEntity? productExist = await _productsRepository.GetByNameAsync(product.Name!);
 
-            return await _productsRepository.DeleteAsync(productExist);
+            return await _productsRepository.DeleteAsync(productExist!);
         }
     }
 }

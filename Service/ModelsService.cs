@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using Repositories.Abstract;
+﻿using Repositories.Abstract;
 using Repositories.Entities;
 using Services.Abstract;
 using Services.Dto;
+using AutoMapper;
 
 namespace Services
 {
@@ -26,9 +26,9 @@ namespace Services
             return _mapper.Map<List<ModelDto>>(models);
         }
 
-        public async Task<ModelDto?> GetByIdAsync(Guid id)
+        public async Task<ModelDto?> GetByIdAsync(Guid modelId)
         {
-            var model = await _modelsRepository.GetByIdAsync(id);
+            var model = await _modelsRepository.GetByIdAsync(modelId);
 
             return _mapper.Map<ModelDto>(model);
         }
@@ -61,9 +61,9 @@ namespace Services
         }
 
         // EXISTS
-        public async Task<bool> IsExist(Guid id)
+        public async Task<bool> IsExist(Guid modelId)
         {
-            return await _modelsRepository.IsExist(id);
+            return await _modelsRepository.IsExist(modelId);
         }
     }
 }

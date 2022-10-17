@@ -8,10 +8,7 @@ namespace Service
     {
         private readonly IProductsService _productService;
 
-        public RabbitMqListener(IProductsService productService)
-        {
-            _productService = productService;
-        }
+        public RabbitMqListener(IProductsService productService) => _productService = productService;
 
         public async Task Consume(ConsumeContext<ProductDto> context)
         {
@@ -21,7 +18,7 @@ namespace Service
             }
             else if (context.Message.CrudOperationsInfo.Equals(CrudOperationsInfo.Update))
             {
-                await _productService.UpdateAsync(context.Message, context.Message.Name); 
+                await _productService.UpdateAsync(context.Message, context.Message.Name!); 
             }
             else if (context.Message.CrudOperationsInfo.Equals(CrudOperationsInfo.Delete))
             {

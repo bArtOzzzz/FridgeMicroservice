@@ -6,7 +6,7 @@ namespace Repositories.Abstract
     {
         // GET
         Task<List<ModelEntity>> GetAllAsync();
-        Task<ModelEntity?> GetByIdAsync(Guid id);
+        Task<ModelEntity?> GetByIdAsync(Guid modelId);
 
         // POST
         Task<Guid> CreateAsync(ModelEntity model);
@@ -18,6 +18,6 @@ namespace Repositories.Abstract
         Task<bool> DeleteAsync(ModelEntity model);
 
         // EXISTS
-        Task<bool> IsExist(Guid id);
+        Task<bool> IsExist(Guid modelId);
     }
 }

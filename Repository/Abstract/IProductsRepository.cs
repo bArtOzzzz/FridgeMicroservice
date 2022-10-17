@@ -17,6 +17,6 @@ namespace Repositories.Abstract
         Task<bool> DeleteAsync(ProductEntity product);
 
         // EXISTS
-        Task<bool> IsExistAsync(Guid id);
+        Task<bool> IsExistAsync(Guid productId);
     }
 }
