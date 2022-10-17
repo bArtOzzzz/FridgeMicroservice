@@ -1,18 +1,19 @@
-﻿using FluentValidation;
-using FridgeMicroservice.Models.Request;
+﻿using FridgeMicroservice.Models.Request;
+using FluentValidation;
 
-namespace FridgeMicroservice.Validation
+namespace FridgeMicroservice.Models.Validation
 {
     public class FridgeProductModelCreateValidator : AbstractValidator<FridgeProductModelCreate>
     {
         public FridgeProductModelCreateValidator()
         {
             RuleFor(fp => fp.ProductId).NotNull()
-                                       .NotEmpty();
+                                       .WithMessage("Product can not be null")
+                                       .NotEmpty()
+                                       .WithMessage("Product can not be empty");
 
-            RuleFor(fp => fp.ProductCount).NotNull()
-                                          .NotEmpty()
-                                          .ExclusiveBetween(0, 999);
+            RuleFor(fp => fp.ProductCount).InclusiveBetween(0, 999)
+                                          .WithMessage("Count can includes 0 to 999");
         }
     }
 }
