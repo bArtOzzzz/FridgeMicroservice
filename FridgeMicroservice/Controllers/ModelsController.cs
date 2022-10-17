@@ -1,15 +1,16 @@
-﻿using AutoMapper;
-using FridgeMicroservice.Models.Request;
-using FridgeMicroservice.Models.Response;
+﻿using FridgeMicroservice.Models.Response;
 using Microsoft.AspNetCore.Authorization;
+using FridgeMicroservice.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstract;
 using Services.Dto;
+using AutoMapper;
 
 namespace FridgeMicroservice.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class ModelsController : Controller
     {
         private readonly IModelsService _modelsService;
@@ -24,6 +25,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpGet]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> GetAllAsync()
         {
             if (!ModelState.IsValid)
@@ -36,6 +38,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpGet("{modelId}")]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> GetByIdAsync(Guid modelId)
         {
             bool isExist = await _modelsService.IsExist(modelId);
@@ -50,6 +53,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpPost]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> CreateAsync(ModelModel model)
         {
             if (model == null || !ModelState.IsValid)
@@ -69,6 +73,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpPut("{modelId}")]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> UpdateAsync(Guid modelId, ModelModel model)
         {
             bool isExist = await _modelsService.IsExist(modelId);
@@ -86,6 +91,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpDelete("{modelId}")]
         [Authorize(Roles = "Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> DeleteAsync(Guid modelId)
         {
             bool isExist = await _modelsService.IsExist(modelId);

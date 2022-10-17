@@ -1,10 +1,13 @@
 using AuthenticationMicroservice.HealthChecks.DatabaseCheck;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using HealthChecks.UI.Client;
 using Repositories.Abstract;
 using Repositories.Context;
@@ -71,8 +74,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-// Get JWT token from Authentication microservice
-builder.Services.AddSwaggerGen();
+// Add Versioning for swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "FridgeMicroservice",
+        Version = "v1"
+    });
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(option =>
@@ -117,6 +127,23 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Add API Versionings
+builder.Services.AddApiVersioning(opt =>
+{
+    opt.DefaultApiVersion = new ApiVersion(1, 0);
+    opt.AssumeDefaultVersionWhenUnspecified = true;
+    opt.ReportApiVersions = true;
+    opt.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
+                                                    new HeaderApiVersionReader("x-api-version"),
+                                                    new MediaTypeApiVersionReader("x-api-version"));
+});
+
+builder.Services.AddVersionedApiExplorer(config =>
+{
+    config.GroupNameFormat = "'v'VVV";
+    config.SubstituteApiVersionInUrl = true;
+});
+
 var app = builder.Build();
 
 app.UseCors("AllowSpecificOrigins");
@@ -133,7 +160,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => c
-       .SwaggerEndpoint("/swagger/v1/swagger.json", "FridgeJWTToken v1"));
+       .SwaggerEndpoint("/swagger/v1/swagger.json", "FridgeMicroservice v1"));
 }
 
 app.UseHttpsRedirection();

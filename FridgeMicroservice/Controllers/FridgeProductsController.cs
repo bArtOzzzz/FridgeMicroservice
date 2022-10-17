@@ -1,15 +1,16 @@
-﻿using AutoMapper;
-using FridgeMicroservice.Models.Request;
-using FridgeMicroservice.Models.Response;
+﻿using FridgeMicroservice.Models.Response;
 using Microsoft.AspNetCore.Authorization;
+using FridgeMicroservice.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstract;
 using Services.Dto;
+using AutoMapper;
 
 namespace FridgeMicroservice.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class FridgeProductsController : Controller
     {
         private readonly IFridgeProductsService _fridgeProductsService;
@@ -24,6 +25,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpGet]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> GetAllAsync()
         {
             if (!ModelState.IsValid)
@@ -36,6 +38,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpGet("{FridgeProductId}")]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> GetByIdAsync(Guid FridgeProductId)
         {
             bool isExist = await _fridgeProductsService.IsExistAsync(FridgeProductId);
@@ -50,6 +53,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpGet("fridgeProduct/{fridgeId}")]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> GetFridgeProductsByFridgeIdAsync(Guid fridgeId)
         {
             bool isExist = await _fridgeProductsService.IsExistFridgeAsync(fridgeId);
@@ -64,6 +68,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpPut("{fridgeProductId}")]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> UpdateAsync(Guid fridgeProductId, FridgeProductModelUpdate fridgeProduct)
         {
             bool isExist = await _fridgeProductsService.IsExistAsync(fridgeProductId);
@@ -81,6 +86,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpPost("{fridgeId}")]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> CreateAsync(Guid fridgeId, FridgeProductModelCreate fridgeProduct)
         {
             if (fridgeProduct == null || !ModelState.IsValid)
@@ -105,6 +111,7 @@ namespace FridgeMicroservice.Controllers
 
         [HttpDelete("{FridgeProductId}")]
         [Authorize(Roles = "User, Administrator")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> DeleteAsync(Guid FridgeProductId)
         {
             bool isExist = await _fridgeProductsService.IsExistAsync(FridgeProductId);
