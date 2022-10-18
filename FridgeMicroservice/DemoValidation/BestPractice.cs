@@ -31,6 +31,16 @@ namespace FridgeMicroservice.NewFolder
     {
         public UserSimpleValidator()
         {
+            // Group Validation
+            RuleSet("UserLoginModelValidator", () => {
+                RuleFor(u => u.Name).NotEmpty()
+                                    .NotNull()
+                                    .Length(2, 22);
+
+                RuleFor(u => u.Email).NotEmpty()
+                                     .EmailAddress();
+            });
+
             // Name
             RuleFor(x => x.Name).NotEmpty()
                                 .NotNull()
