@@ -30,24 +30,39 @@ builder.Services.AddFluentValidation(x =>
 });
 #pragma warning restore CS0618
 
-// Add Masstransit && RabbitMQ
+// Add Masstransit && RabbitMQ && Azure Service Bus
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<RabbitMqListener>();
-    x.AddBus(provider => Bus.Factory
-     .CreateUsingRabbitMq(config =>
+
+    if (builder.Environment.IsDevelopment())
     {
-        config.Host(new Uri("rabbitmq://localhost"), h =>
+
+        x.UsingRabbitMq((context, cfg) =>
         {
-            h.Username("guest");
-            h.Password("guest");
+            cfg.Host("localhost", "/", h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+
+            cfg.UseMessageRetry(r => r.Interval(10, TimeSpan.FromSeconds(10)));
+
+            cfg.ConfigureEndpoints(context);
         });
-        config.ReceiveEndpoint("product-created-event", ep =>
+    }
+    else
+    {
+        x.UsingAzureServiceBus((context, cfg) =>
         {
-            ep.UseMessageRetry(r => r.Interval(100, 100));
-            ep.ConfigureConsumer<RabbitMqListener>(provider);
+            // WARNING: Configuration is invalid!
+            cfg.Host(builder.Configuration["AzureSettings:PrimaryConnectionString"]);
+
+            cfg.UseMessageRetry(r => r.Interval(10, TimeSpan.FromSeconds(10)));
+
+            cfg.ConfigureEndpoints(context);
         });
-    }));
+    }
 });
 
 // Add services to the container.

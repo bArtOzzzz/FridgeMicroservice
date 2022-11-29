@@ -26,7 +26,7 @@ namespace Repositories
                                          .FirstOrDefaultAsync();
         }
 
-        public async Task<List<ProductEntity>> GetProductsByFridgeIdAsync(Guid fridgeId)
+        public async Task<List<ProductEntity?>> GetProductsByFridgeIdAsync(Guid fridgeId)
         {
             return await _context.FridgeProducts.Where(fp => fp.FridgeId.Equals(fridgeId))
                                                 .Select(p => p.Product)
@@ -60,6 +60,7 @@ namespace Repositories
 
             currentFridge!.Manufacturer = fridge.Manufacturer;
             currentFridge.OwnerName = fridge.OwnerName;
+            currentFridge.UpdatedDate = DateTime.UtcNow;
 
             _context.Update(currentFridge);
             await _context.SaveChangesAsync();

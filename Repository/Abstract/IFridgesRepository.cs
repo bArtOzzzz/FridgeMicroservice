@@ -7,7 +7,7 @@ namespace Repositories.Abstract
         // GET
         Task<List<FridgeEntity>> GetAllAsync();
         Task<FridgeEntity?> GetByIdAsync(Guid fridgeId);
-        Task<List<ProductEntity>> GetProductsByFridgeIdAsync(Guid fridgeId);
+        Task<List<ProductEntity?>> GetProductsByFridgeIdAsync(Guid fridgeId);
 
         // POST
         Task<Guid> CreateAsync(FridgeEntity fridge);

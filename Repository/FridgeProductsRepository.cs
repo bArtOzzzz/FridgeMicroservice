@@ -37,9 +37,10 @@ namespace Repositories
         public async Task<Guid> UpdateAsync(Guid fridgeProductId, FridgeProductEntity fridgeProduct)
         {
             var currentFridgeProduct = await _context.FridgeProducts.Where(f => f.Id.Equals(fridgeProductId))
-                                                      .FirstOrDefaultAsync();
+                                                                    .FirstOrDefaultAsync();
 
             currentFridgeProduct!.ProductCount = fridgeProduct.ProductCount;
+            currentFridgeProduct.UpdatedDate = DateTime.UtcNow;
 
             _context.Update(currentFridgeProduct);
             await _context.SaveChangesAsync();

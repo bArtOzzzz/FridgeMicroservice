@@ -52,6 +52,7 @@ namespace Repositories
 
             currentModel!.Name = model.Name;
             currentModel.ProductionYear = model.ProductionYear;
+            currentModel.UpdatedDate = DateTime.UtcNow;
 
             _context.Update(currentModel);
             await _context.SaveChangesAsync();

@@ -46,6 +46,7 @@ namespace Repositories
 
             currentProduct!.Name = name;
             currentProduct.LinkImage = product.LinkImage;
+            currentProduct.UpdatedDate = DateTime.UtcNow;
 
             _context.Update(currentProduct);
             await _context.SaveChangesAsync();
