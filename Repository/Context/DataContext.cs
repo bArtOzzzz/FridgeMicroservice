@@ -26,7 +26,6 @@ namespace Repositories.Context
                                      Guid.NewGuid(),
                                      Guid.NewGuid() };
 
-
             // Set main settings for entities
             modelBuilder.Entity<ModelEntity>(
                 entity =>
