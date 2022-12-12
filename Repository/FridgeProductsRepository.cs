@@ -88,34 +88,5 @@ namespace Repositories
         {
             return await _context.Fridges.FindAsync(fridgeId) != null;
         }
-
-        //________________________________NEW_SECTION___________________________
-
-        public async Task<List<FridgeProductEntity>> Test1()
-        {
-            return await _context.FridgeProducts.Include(f => f.Fridge)
-                                                .ThenInclude(m => m!.Model)
-                                                .GroupBy(f => f.Product)
-                                                .ToListAsync();
-        }
-
-        // Take - Gets the set numbers of entities from collection
-        // TakeWhile - Gets the set numbers while condision is true
-        // TakeLast - Gets the set numbers of entities from collection and starts at the end of the collection
-
-        // Skip - Skips the set number of entities from collection
-        // SkipWhle - ...
-        // SkipLast - ...
-        public async Task<List<FridgeEntity>> Test2()
-        {
-            return await _context.Fridges.Include(m => m!.Model)
-                                         .Where(u => u.OwnerName!.ToUpper()
-                                                                 .StartsWith("E"))
-                                         .Take(3)
-                                         .OrderByDescending(f => f.Manufacturer)
-                                         .ToListAsync();
-        }
-
-        //______________________________END_NEW_SECTION_________________________
     }
 }
