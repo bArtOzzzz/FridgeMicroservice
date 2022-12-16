@@ -20,6 +20,7 @@ namespace Services.Abstract
 
         // EXISTS
         Task<bool> IsExistAsync(Guid fridgeProductId);
+        Task<bool> IsExistFridgeProductAsync(FridgeProductDto fridgeProduct);
         Task<bool> IsExistFridgeAsync(Guid fridgeId);
     }
 }

@@ -20,6 +20,7 @@ namespace Repositories.Abstract
 
         // EXISTS
         Task<bool> IsExistAsync(Guid productId);
+        Task<bool> IsExistFridgeProductAsync(FridgeProductEntity fridgeProduct);
         Task<bool> IsExistFridgeAsync(Guid fridgeId);
     }
 }

@@ -14,7 +14,8 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5269",
+      //"applicationUrl": "http://localhost:5269",
+      "applicationUrl": "https://fridgeapiwebapp.azurewebsites.net",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -84,6 +84,13 @@ namespace Repositories
             return await _context.FridgeProducts.FindAsync(fridgeProductId) != null;
         }
 
+        public async Task<bool> IsExistFridgeProductAsync(FridgeProductEntity fridgeProduct)
+        {
+            return await _context.FridgeProducts.Where(fp => fp.FridgeId.Equals(fridgeProduct.FridgeId) &&
+                                                             fp.ProductId.Equals(fridgeProduct.ProductId))
+                                                .AnyAsync();
+        }
+
         public async Task<bool> IsExistFridgeAsync(Guid fridgeId)
         {
             return await _context.Fridges.FindAsync(fridgeId) != null;

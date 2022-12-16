@@ -75,6 +75,13 @@ namespace Services
             return await _fridgeProductsRepository.IsExistAsync(fridgeProductId);
         }
 
+        public async Task<bool> IsExistFridgeProductAsync(FridgeProductDto fridgeProduct)
+        {
+            var fridgeProductMap = _mapper.Map<FridgeProductEntity>(fridgeProduct);
+
+            return await _fridgeProductsRepository.IsExistFridgeProductAsync(fridgeProductMap);
+        }
+
         public async Task<bool> IsExistFridgeAsync(Guid fridgeId)
         {
             return await _fridgeProductsRepository.IsExistFridgeAsync(fridgeId);

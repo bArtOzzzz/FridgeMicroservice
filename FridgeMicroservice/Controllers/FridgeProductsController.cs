@@ -93,11 +93,17 @@ namespace FridgeMicroservice.Controllers
                 return NotFound();
 
             var productMap = _mapper.Map<FridgeProductDto>(fridgeProduct);
+            productMap.FridgeId= fridgeId;
 
-            if (productMap != null)
+            bool isExist = await _fridgeProductsService.IsExistFridgeProductAsync(productMap);
+
+            if (productMap == null)
+                return NotFound("Invalid data or resource not found");
+
+            if (!isExist)
                 await _fridgeProductsService.CreateAsync(fridgeId, productMap);
             else
-                return BadRequest("Invalid data");
+                return BadRequest("The same resourse already exist!");
 
             string[] response = new[]
             {

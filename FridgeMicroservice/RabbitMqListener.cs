@@ -1,8 +1,8 @@
-﻿using Services.Abstract;
+﻿/*using Services.Abstract;
 using Services.Dto;
 using MassTransit;
 
-namespace Service
+namespace FridgeMicroservice
 {
     public class RabbitMqListener : IConsumer<ProductDto>
     {
@@ -26,4 +26,4 @@ namespace Service
             }
         }
     }
-}
+}*/

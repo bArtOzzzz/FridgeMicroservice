@@ -15,7 +15,7 @@ namespace Repositories
         // GET
         public async Task<ProductEntity?> GetByNameAsync(string name)
         {
-            return await _context.Products.Where(p => p.Name.Equals(name))
+            return await _context.Products.Where(p => p.Name!.Equals(name))
                                           .AsNoTracking()
                                           .FirstOrDefaultAsync();
         }
