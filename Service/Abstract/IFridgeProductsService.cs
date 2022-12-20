@@ -7,7 +7,7 @@ namespace Services.Abstract
         // GET
         Task<List<FridgeProductDto>> GetAllAsync();
         Task<FridgeProductDto?> GetByIdAsync(Guid fridgeProductId);
-        Task<List<FridgeProductDto>> GetFridgeProductsByFridgeIdAsync(Guid fridgeId);
+        Task<List<FridgeProductDto>> GetFridgeProductsByProductIdAsync(Guid productId);
 
         // PUT
         Task<Guid> UpdateAsync(Guid fridgeProductId, FridgeProductDto fridgeProduct);
@@ -20,7 +20,8 @@ namespace Services.Abstract
 
         // EXISTS
         Task<bool> IsExistAsync(Guid fridgeProductId);
-        Task<bool> IsExistFridgeProductAsync(FridgeProductDto fridgeProduct);
+        Task<bool> IsExistAsync(FridgeProductDto fridgeProduct);
         Task<bool> IsExistFridgeAsync(Guid fridgeId);
+        Task<bool> IsExistProductAsync(Guid productId);
     }
 }

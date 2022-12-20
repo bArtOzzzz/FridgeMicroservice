@@ -7,7 +7,7 @@ namespace Repositories.Abstract
         // GET
         Task<List<FridgeProductEntity>> GetAllAsync();
         Task<FridgeProductEntity?> GetByIdAsync(Guid fridgeProductId);
-        Task<List<FridgeProductEntity>> GetFridgeProductsByFridgeIdAsync(Guid fridgeId);
+        Task<List<FridgeProductEntity>> GetFridgeProductsByProductIdAsync(Guid productId);
 
         // PUT
         Task<Guid> UpdateAsync(Guid fridgeProductId, FridgeProductEntity fridgeProduct);
@@ -19,8 +19,9 @@ namespace Repositories.Abstract
         Task<bool> DeleteAsync(FridgeProductEntity fridgeProduct);
 
         // EXISTS
-        Task<bool> IsExistAsync(Guid productId);
-        Task<bool> IsExistFridgeProductAsync(FridgeProductEntity fridgeProduct);
+        Task<bool> IsExistAsync(Guid fridgeProductId);
+        Task<bool> IsExistAsync(FridgeProductEntity fridgeProduct);
         Task<bool> IsExistFridgeAsync(Guid fridgeId);
+        Task<bool> IsExistProductAsync(Guid productId);
     }
 }

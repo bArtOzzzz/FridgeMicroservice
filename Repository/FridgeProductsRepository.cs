@@ -26,9 +26,9 @@ namespace Repositories
                                                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<FridgeProductEntity>> GetFridgeProductsByFridgeIdAsync(Guid fridgeId)
+        public async Task<List<FridgeProductEntity>> GetFridgeProductsByProductIdAsync(Guid productId)
         {
-            return await _context.FridgeProducts.Where(fp => fp.FridgeId.Equals(fridgeId))
+            return await _context.FridgeProducts.Where(fp => fp.ProductId.Equals(productId))
                                                 .AsNoTracking()
                                                 .ToListAsync();
         }
@@ -81,10 +81,11 @@ namespace Repositories
         // EXISTS
         public async Task<bool> IsExistAsync(Guid fridgeProductId)
         {
-            return await _context.FridgeProducts.FindAsync(fridgeProductId) != null;
+            return await _context.FridgeProducts.Where(fp => fp.Id.Equals(fridgeProductId))
+                                                .AnyAsync();
         }
 
-        public async Task<bool> IsExistFridgeProductAsync(FridgeProductEntity fridgeProduct)
+        public async Task<bool> IsExistAsync(FridgeProductEntity fridgeProduct)
         {
             return await _context.FridgeProducts.Where(fp => fp.FridgeId.Equals(fridgeProduct.FridgeId) &&
                                                              fp.ProductId.Equals(fridgeProduct.ProductId))
@@ -93,7 +94,14 @@ namespace Repositories
 
         public async Task<bool> IsExistFridgeAsync(Guid fridgeId)
         {
-            return await _context.Fridges.FindAsync(fridgeId) != null;
+            return await _context.Fridges.Where(f => f.Id.Equals(fridgeId))
+                                         .AnyAsync();
+        }
+
+        public async Task<bool> IsExistProductAsync(Guid productId)
+        {
+            return await _context.Products.Where(f => f.Id.Equals(productId))
+                                          .AnyAsync();
         }
     }
 }

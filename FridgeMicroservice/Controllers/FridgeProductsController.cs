@@ -43,7 +43,7 @@ namespace FridgeMicroservice.Controllers
         {
             bool isExist = await _fridgeProductsService.IsExistAsync(FridgeProductId);
 
-            if (!isExist || ModelState.IsValid)
+            if (!isExist || !ModelState.IsValid)
                 return NotFound();
 
             var fidgeProduct = await _fridgeProductsService.GetByIdAsync(FridgeProductId);
@@ -51,17 +51,17 @@ namespace FridgeMicroservice.Controllers
             return Ok(_mapper.Map<FridgeProductResponse>(fidgeProduct));
         }
 
-        [HttpGet("fridgeProduct/{fridgeId}")]
+        [HttpGet("fridgeProduct/{productId}")]
         [Authorize(Roles = "User, Administrator")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult> GetFridgeProductsByFridgeIdAsync(Guid fridgeId)
+        public async Task<ActionResult> GetFridgeProductsByProductIdAsync(Guid productId)
         {
-            bool isExist = await _fridgeProductsService.IsExistFridgeAsync(fridgeId);
+            bool isExist = await _fridgeProductsService.IsExistProductAsync(productId);
 
             if (!isExist || !ModelState.IsValid)
                 return NotFound();
 
-            var fridgeProduct = await _fridgeProductsService.GetFridgeProductsByFridgeIdAsync(fridgeId);
+            var fridgeProduct = await _fridgeProductsService.GetFridgeProductsByProductIdAsync(productId);
 
             return Ok(_mapper.Map<List<FridgeProductResponse>>(fridgeProduct));
         }
@@ -95,7 +95,7 @@ namespace FridgeMicroservice.Controllers
             var productMap = _mapper.Map<FridgeProductDto>(fridgeProduct);
             productMap.FridgeId= fridgeId;
 
-            bool isExist = await _fridgeProductsService.IsExistFridgeProductAsync(productMap);
+            bool isExist = await _fridgeProductsService.IsExistAsync(productMap);
 
             if (productMap == null)
                 return NotFound("Invalid data or resource not found");

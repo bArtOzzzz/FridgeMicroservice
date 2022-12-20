@@ -33,9 +33,9 @@ namespace Services
             return _mapper.Map<FridgeProductDto>(fridgeProduct);
         }
 
-        public async Task<List<FridgeProductDto>> GetFridgeProductsByFridgeIdAsync(Guid fridgeId)
+        public async Task<List<FridgeProductDto>> GetFridgeProductsByProductIdAsync(Guid productId)
         {
-            var fridgeProduct = await _fridgeProductsRepository.GetFridgeProductsByFridgeIdAsync(fridgeId);
+            var fridgeProduct = await _fridgeProductsRepository.GetFridgeProductsByProductIdAsync(productId);
 
             return _mapper.Map<List<FridgeProductDto>>(fridgeProduct);
         }
@@ -75,16 +75,21 @@ namespace Services
             return await _fridgeProductsRepository.IsExistAsync(fridgeProductId);
         }
 
-        public async Task<bool> IsExistFridgeProductAsync(FridgeProductDto fridgeProduct)
+        public async Task<bool> IsExistAsync(FridgeProductDto fridgeProduct)
         {
             var fridgeProductMap = _mapper.Map<FridgeProductEntity>(fridgeProduct);
 
-            return await _fridgeProductsRepository.IsExistFridgeProductAsync(fridgeProductMap);
+            return await _fridgeProductsRepository.IsExistAsync(fridgeProductMap);
         }
 
         public async Task<bool> IsExistFridgeAsync(Guid fridgeId)
         {
             return await _fridgeProductsRepository.IsExistFridgeAsync(fridgeId);
+        }
+
+        public async Task<bool> IsExistProductAsync(Guid productId)
+        {
+            return await _fridgeProductsRepository.IsExistProductAsync(productId);
         }
     }
 }

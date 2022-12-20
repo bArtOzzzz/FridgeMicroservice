@@ -12,7 +12,7 @@ namespace Services
         private readonly IMapper _mapper;
 
         public ProductsService(IProductsRepository productsRepository,
-                                       IMapper mapper)
+                               IMapper mapper)
         {
             _productsRepository = productsRepository;
             _mapper = mapper;
