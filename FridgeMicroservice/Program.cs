@@ -21,43 +21,47 @@ using Repositories;
 using System.Text;
 using MassTransit;
 using Services;
+using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Masstransit && RabbitMQ && Azure Service Bus
-/*builder.Services.AddMassTransit(x =>
+builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<RabbitMqListener>();
+    x.AddConsumer<ProductConsumerService>();
 
-    if (builder.Environment.IsDevelopment())
-    {
+    x.AddBus(registrationContext => Bus.Factory.CreateUsingAzureServiceBus(configurator => {
+        configurator.Host(builder.Configuration["ServiceBus:ConnectionString"]);
 
-        x.UsingRabbitMq((context, cfg) =>
+        configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameCreate"], endpointConfigurator =>
         {
-            cfg.Host("localhost", "/", h =>
-            {
-                h.Username("guest");
-                h.Password("guest");
-            });
-
-            cfg.UseMessageRetry(r => r.Interval(10, TimeSpan.FromSeconds(10)));
-
-            cfg.ConfigureEndpoints(context);
+            endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
         });
-    }
-    *//*else
-    {
-        x.UsingAzureServiceBus((context, cfg) =>
+
+        configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameUpdate"], endpointConfigurator =>
         {
-            // WARNING: Configuration is invalid!
-            cfg.Host(builder.Configuration["AzureSettings:PrimaryConnectionString"]);
-
-            cfg.UseMessageRetry(r => r.Interval(10, TimeSpan.FromSeconds(10)));
-
-            cfg.ConfigureEndpoints(context);
+            endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
         });
-    }*//*
-});*/
+
+        configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameDelete"], endpointConfigurator =>
+        {
+            endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
+        });
+    }));
+
+    /*x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.UseMessageRetry(r => r.Interval(10, TimeSpan.FromSeconds(10)));
+
+        cfg.ConfigureEndpoints(context);
+    });*/
+});
 
 // Key Vault URL
 Environment.SetEnvironmentVariable("KVUrl", "https://applicationkv.vault.azure.net/");
@@ -108,6 +112,8 @@ builder.Services.AddScoped<IValidator<FridgeModel>, FridgeModelValidator>();
 builder.Services.AddScoped<IValidator<FridgeProductModelCreate>, FridgeProductModelCreateValidator>();
 builder.Services.AddScoped<IValidator<FridgeProductModelUpdate>, FridgeProductModelUpdateValidator>();
 builder.Services.AddScoped<IValidator<ModelModel>, ModelModelValidator>();
+
+builder.Services.AddSingleton<IHostedService, BusHostedService>();
 
 builder.Services.AddControllers();
 

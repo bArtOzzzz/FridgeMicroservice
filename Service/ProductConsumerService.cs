@@ -1,24 +1,28 @@
-﻿/*using Services.Abstract;
+﻿using MassTransit;
+using Microsoft.Azure.ServiceBus;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Services.Abstract;
 using Services.Dto;
-using MassTransit;
+using System.Text;
 
-namespace FridgeMicroservice
+namespace Service
 {
-    public class RabbitMqListener : IConsumer<ProductDto>
+    public class ProductConsumerService : IConsumer<ProductDto>
     {
         private readonly IProductsService _productService;
 
-        public RabbitMqListener(IProductsService productService) => _productService = productService;
+        public ProductConsumerService(IProductsService productService) => _productService = productService;
 
         public async Task Consume(ConsumeContext<ProductDto> context)
         {
-            if(context.Message.CrudOperationsInfo.Equals(CrudOperationsInfo.Create))
+            if (context.Message.CrudOperationsInfo.Equals(CrudOperationsInfo.Create))
             {
                 await _productService.CreateAsync(context.Message);
             }
             else if (context.Message.CrudOperationsInfo.Equals(CrudOperationsInfo.Update))
             {
-                await _productService.UpdateAsync(context.Message, context.Message.Name!); 
+                await _productService.UpdateAsync(context.Message, context.Message.Name!);
             }
             else if (context.Message.CrudOperationsInfo.Equals(CrudOperationsInfo.Delete))
             {
@@ -26,4 +30,4 @@ namespace FridgeMicroservice
             }
         }
     }
-}*/
+}
