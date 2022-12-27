@@ -30,37 +30,42 @@ builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<ProductConsumerService>();
 
-    x.AddBus(registrationContext => Bus.Factory.CreateUsingAzureServiceBus(configurator => {
-        configurator.Host(builder.Configuration["ServiceBus:ConnectionString"]);
-
-        configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameCreate"], endpointConfigurator =>
-        {
-            endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
-        });
-
-        configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameUpdate"], endpointConfigurator =>
-        {
-            endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
-        });
-
-        configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameDelete"], endpointConfigurator =>
-        {
-            endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
-        });
-    }));
-
-    /*x.UsingRabbitMq((context, cfg) =>
+    if (builder.Environment.IsDevelopment())
     {
-        cfg.Host("localhost", "/", h =>
+        x.UsingRabbitMq((context, cfg) =>
         {
-            h.Username("guest");
-            h.Password("guest");
+            cfg.Host("localhost", "/", h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+
+            cfg.UseMessageRetry(r => r.Interval(10, TimeSpan.FromSeconds(10)));
+
+            cfg.ConfigureEndpoints(context);
         });
+    }
+    else
+    {
+        x.AddBus(registrationContext => Bus.Factory.CreateUsingAzureServiceBus(configurator => {
+            configurator.Host(builder.Configuration["ServiceBus:ConnectionString"]);
 
-        cfg.UseMessageRetry(r => r.Interval(10, TimeSpan.FromSeconds(10)));
+            configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameCreate"], endpointConfigurator =>
+            {
+                endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
+            });
 
-        cfg.ConfigureEndpoints(context);
-    });*/
+            configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameUpdate"], endpointConfigurator =>
+            {
+                endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
+            });
+
+            configurator.ReceiveEndpoint(builder.Configuration["ServiceBus:QueueNameDelete"], endpointConfigurator =>
+            {
+                endpointConfigurator.ConfigureConsumer<ProductConsumerService>(registrationContext);
+            });
+        }));
+    } 
 });
 
 // Key Vault URL
