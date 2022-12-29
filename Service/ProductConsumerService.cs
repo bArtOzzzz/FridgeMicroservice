@@ -1,9 +1,9 @@
-﻿using MassTransit;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using Services.Abstract;
+using Newtonsoft.Json;
 using Services.Dto;
+using MassTransit;
 using System.Text;
 
 namespace Service

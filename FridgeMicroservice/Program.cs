@@ -178,7 +178,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     };
                 });
 
-// Add connection to the databases
+// Database connection
 builder.Services.AddDbContext<DataContext>(options =>
 {
     // Azure connection
