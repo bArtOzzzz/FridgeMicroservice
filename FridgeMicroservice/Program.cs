@@ -182,10 +182,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddDbContext<DataContext>(options =>
 {
     // Azure connection
-    options.UseSqlServer(clientDatabase.GetSecret("ConnectionString-FridgeConnection").Value.Value, b => b.MigrationsAssembly("FridgeMicroservice"));
+    //options.UseSqlServer(clientDatabase.GetSecret("ConnectionString-FridgeConnection").Value.Value, b => b.MigrationsAssembly("FridgeMicroservice"));
 
     // Local connection
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("FridgeMicroservice"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("FridgeMicroservice"));
 });
 
 // Add Healthcheck
